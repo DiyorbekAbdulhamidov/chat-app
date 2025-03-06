@@ -1,11 +1,7 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { Login } from "../pages";
-import { CallBack } from "../pages";
-// import Chat from "../pages/Chat";
-// import Profile from "../pages/Profile";
-// import NotFound from "../pages/NotFound";
-// import MainLayout from "../layouts/MainLayout";
-import { AuthLayout } from "../layouts";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Login } from "../pages/auth";
+import { Register } from "../pages/auth";
+import { GoogleCallback } from "../pages/auth";
 import { useAuth } from "../hooks";
 
 const AppRoutes = () => {
@@ -14,21 +10,16 @@ const AppRoutes = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/auth/google" element={<CallBack />} />
-
-        {isAuthenticated ? (
-          <Route element={<MainLayout />}>
-            {/* <Route path="/chat" element={<Chat />} /> */}
-            {/* <Route path="/profile" element={<Profile />} /> */}
-          </Route>
+        {!isAuthenticated ? (
+          <>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/auth/google/callback" element={<GoogleCallback />} />
+            <Route path="*" element={<Login />} />
+          </>
         ) : (
-          // Agar foydalanuvchi autentifikatsiya qilmagan bo‘lsa, login sahifasiga yo‘naltiramiz
-          <Route path="*" element={<Navigate to="/login" replace />} />
+          <Route path="*" element={<div>Chat sahifasi yoki boshqa kontent</div>} />
         )}
-
-        {/* 404 Not Found sahifasi */}
-        {/* <Route path="*" element={<NotFound />} /> */}
       </Routes>
     </Router>
   );

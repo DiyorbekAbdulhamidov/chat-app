@@ -17,4 +17,4 @@ const useAuth = () => {
   return { isAuthenticated, logout };
 };
 
-export default useAuth; 
+export default useAuth;
